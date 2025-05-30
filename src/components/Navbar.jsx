@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => (
   <header className="fixed top-0 left-0 w-full bg-gradient-to-r from-gray-500 to-gray-350 text-white shadow-lg border-b border-gray-700/30 z-50 backdrop-blur-sm bg-opacity-100">
-    <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+    <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-1">
       {/* Logo */}
       <Link to="/" className="flex flex-col leading-none group transition-transform duration-200 hover:scale-105 relative">
-        <span className="text-4xl font-bold tracking-wider text-white group-hover:text-yellow-300 relative -mb-1 italic font-serif">KYS</span>
+        <span className="text-4xl font-bold tracking-wider text-white group-hover:text-yellow-500 relative -mb-1 italic font-serif">KYS</span>
         <span className="text-m text-gray-200 relative z-10 italic">Know Your Sides</span>
       </Link>
 
