@@ -1,5 +1,17 @@
 # React + Vite
 
+How to run it:
+- npm install
+- npm run dev
+
+
+
+- Сделай полоску сверху как на сайтах, добавь туда логотик (какой0нибудь)
+- Поменяй цвет на то как ты его видишь в конце
+- попробуй сделать так чтобы сайт выглядел приблизательно как на твоих шаблонах
+
+
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
