@@ -18,9 +18,9 @@ const Navbar = () => (
 
       {/* Donate */}
       <a href="https://ko-fi.com/ВАШ_КОФИ" target="_blank" rel="noopener noreferrer"
-           className="rounded bg-teal-500 px-3 py-1.5 text-sm font-semibold text-white hover:bg-teal-400">
-          Support&nbsp;the&nbsp;author
-        </a>
+        className="rounded bg-teal-500 px-3 py-1.5 text-sm font-semibold text-white hover:bg-teal-400">
+        Support&nbsp;the&nbsp;author
+      </a>
     </div>
   </header>
 );
@@ -28,6 +28,6 @@ const Navbar = () => (
 export default Navbar;
 
 
-
 import { Link } from "react-router-dom";
+
 
