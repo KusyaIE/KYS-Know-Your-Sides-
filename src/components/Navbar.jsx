@@ -5,14 +5,14 @@ const Navbar = () => (
     <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-1">
       {/* Logo */}
       <Link to="/" className="flex flex-col leading-none group transition-transform duration-200 hover:scale-105 relative">
-        <span className="text-4xl font-bold tracking-wider text-white group-hover:text-yellow-500 relative -mb-1 italic font-serif">KYS</span>
+        <span className="text-4xl font-bold tracking-wider text-white group-hover:text-yellow-500 relative -mb-1 italic ">KYS</span>
         <span className="text-m text-gray-200 relative z-10 italic">Know Your Sides</span>
       </Link>
 
       {/* Links */}
-      <nav className="hidden gap-8 md:flex items-center">
+      <nav className="hidden gap-35 md:flex items-center">
         <a 
-          href="https://github.com/ВАШ-ЛОГИН/left-right-puzzle" 
+          href="https://github.com/KusyaIE/KYS-Know-Your-Sides-" 
           target="_blank" 
           rel="noopener noreferrer" 
           className="text-gray-300 hover:text-gray-900 transition-colors duration-200 text-sm font-medium"
