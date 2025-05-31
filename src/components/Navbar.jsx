@@ -15,19 +15,19 @@ const Navbar = () => (
           href="https://github.com/KusyaIE/KYS-Know-Your-Sides-" 
           target="_blank" 
           rel="noopener noreferrer" 
-          className="text-gray-300 hover:text-gray-900 transition-colors duration-200 text-sm font-medium"
+          className="text-gray-300 hover:text-gray-900 transition-colors duration-200 text-s font-medium"
         >
           GitHub
         </a>
         <a 
           href="#" 
-          className="text-gray-300 hover:text-gray-1000 transition-colors duration-200 text-sm font-medium"
+          className="text-gray-300 hover:text-gray-1000 transition-colors duration-200 text-s font-medium"
         >
           Sample Source
         </a>
         <a 
           href="#" 
-          className="text-gray-300 hover:text-gray-1000 transition-colors duration-200 text-sm font-medium"
+          className="text-gray-300 hover:text-gray-1000 transition-colors duration-200 text-s font-medium"
         >
           Extension (soon)
         </a>
