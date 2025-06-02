@@ -5,8 +5,8 @@ const TaskDisplay = ({ currentTask, onTaskComplete }) => {
   const tasks = [
     {
       id: 1,
-      image: '/task1.jpg', // You'll need to add actual images to your assets
-      instruction: 'Identify the left side of the image',
+      image: '/media/Which ear did the dog tilt   left or right (left).png', // You'll need to add actual images to your assets
+      instruction: 'Which ear did the dog tilt - left or right?',
     },
     {
       id: 2,
@@ -27,12 +27,18 @@ const TaskDisplay = ({ currentTask, onTaskComplete }) => {
         </div>
 
         {/* Image Display */}
-        <div className="relative aspect-video w-full overflow-hidden rounded-lg shadow-xl mb-8">
-          <img
-            src={tasks[currentTask - 1]?.image}
-            alt={`Task ${currentTask}`}
-            className="w-full h-full object-cover"
-          />
+        <div className="flex justify-center items-center mb-8">
+          <div className="w-[500px] h-[500px] relative overflow-hidden rounded-lg shadow-xl">
+            <img
+              src={tasks[currentTask - 1]?.image}
+              alt={`Task ${currentTask}`}
+              className="w-full h-full object-contain"
+              style={{
+                maxWidth: '500px',
+                maxHeight: '500px',
+              }}
+            />
+          </div>
         </div>
 
         {/* Navigation Buttons */}
