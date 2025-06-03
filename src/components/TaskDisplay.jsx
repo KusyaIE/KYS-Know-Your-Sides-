@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useLayoutEffect } from 'react';
 
 const TaskDisplay = ({ currentTask, onTaskComplete }) => {
   const [feedback, setFeedback] = useState('');
   const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [taskSequence, setTaskSequence] = useState([]);
 
   // Example task structure - you can modify this based on your actual tasks
   const tasks = [
@@ -45,13 +46,36 @@ const TaskDisplay = ({ currentTask, onTaskComplete }) => {
     // Add more tasks as needed
   ];
 
+  // Fisher-Yates shuffle algorithm
+  const shuffleArray = (array) => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
+
+  // Initialize random task sequence
+  useLayoutEffect(() => {
+    setTaskSequence(
+      shuffleArray(
+        [...Array(tasks.length)].map((_, i) => i)
+      )
+    );
+  }, [tasks.length]); 
+
   const handleAnswer = (answer) => {
     setSelectedAnswer(answer);
-    const isCorrect = answer === tasks[currentTask - 1].answer;
+    const currentTaskData = tasks[taskSequence[currentTask - 1]];
+    const isCorrect = answer === currentTaskData.answer;
     setFeedback(isCorrect ? 'Correct!' : 'Wrong!');
     
-    // Wait for 1.5 seconds before moving to next task
     setTimeout(() => {
+      if (currentTask === tasks.length) {
+        // If we're at the last task, generate new random sequence
+        setTaskSequence(shuffleArray([...Array(tasks.length)].map((_, i) => i)));
+      }
       onTaskComplete();
       setFeedback('');
       setSelectedAnswer(null);
@@ -64,7 +88,8 @@ const TaskDisplay = ({ currentTask, onTaskComplete }) => {
       : 'bg-gray-300 text-white';
 
     if (selectedAnswer === buttonType) {
-      const isCorrect = buttonType === tasks[currentTask - 1].answer;
+      const currentTaskData = tasks[taskSequence[currentTask - 1]];
+      const isCorrect = buttonType === currentTaskData.answer;
       return isCorrect 
         ? 'bg-green-500 text-white' 
         : 'bg-red-500 text-white';
@@ -73,6 +98,9 @@ const TaskDisplay = ({ currentTask, onTaskComplete }) => {
     return baseStyles;
   };
 
+  // Get current task data based on shuffled sequence
+  const currentTaskData = taskSequence.length > 0 ? tasks[taskSequence[currentTask - 1]] : tasks[0];
+
   return (
     <div className="flex flex-col items-center min-h-screen pt-0 pb-2 px-4 w-full">
       <div className="bg-gray-800/20 rounded-xl shadow-2xl p-8 max-w-10xl w-21/12 backdrop-blur-sm mt-20">
@@ -80,7 +108,7 @@ const TaskDisplay = ({ currentTask, onTaskComplete }) => {
         <div className="h-19 mb-6"> {/* Fixed height container */}
           <div className="text-center">
             <h2 className="text-2xl font-bold text-gray-100 mb-2">
-              {tasks[currentTask - 1]?.instruction || 'Loading task...'}
+              {currentTaskData?.instruction || 'Loading task...'}
             </h2>
             <div className="h-8"> {/* Fixed height for feedback */}
               {feedback && (
@@ -96,7 +124,7 @@ const TaskDisplay = ({ currentTask, onTaskComplete }) => {
         <div className="flex justify-center items-center mb-4">
           <div className="w-[500px] h-[500px] relative overflow-hidden rounded-lg shadow-xl">
             <img
-              src={tasks[currentTask - 1]?.image}
+              src={currentTaskData?.image}
               alt={`Task ${currentTask}`}
               className="w-full h-full object-contain"
               style={{
