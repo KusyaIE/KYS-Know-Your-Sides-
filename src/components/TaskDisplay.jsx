@@ -18,6 +18,30 @@ const TaskDisplay = ({ currentTask, onTaskComplete }) => {
       instruction: 'Is the light switch to the left or to the right of the door?',
       answer: "left"
     },
+    {
+      id: 3,
+      image: '/media/Which shoe is untied   the left or the right (right).png',
+      instruction: 'Which shoe is untied - the left or the right?',
+      answer: "right"
+    },
+    {
+      id: 4,
+      image: '/media/Which side of the vase is the apple on (left).png',
+      instruction: 'Which side of the vase is the apple on?',
+      answer: "left"
+    },
+    {
+      id: 5,
+      image: '/media/Which side of the plate is the spoon on (right).png',
+      instruction: 'Which side of the plate is the spoon on?',
+      answer: "right"
+    },
+    {
+      id: 6,
+      image: '/media/Which side of the plate is the knife on (left).png',
+      instruction: 'Which side of the plate is the knife on?',
+      answer: "left"
+    },
     // Add more tasks as needed
   ];
 
@@ -52,16 +76,20 @@ const TaskDisplay = ({ currentTask, onTaskComplete }) => {
   return (
     <div className="flex flex-col items-center min-h-screen pt-0 pb-2 px-4 w-full">
       <div className="bg-gray-800/20 rounded-xl shadow-2xl p-8 max-w-10xl w-21/12 backdrop-blur-sm mt-20">
-        {/* Task Instructions */}
-        <div className="text-center mb-9">
-          <h2 className="text-2xl font-bold text-gray-100 mb-2">
-            {tasks[currentTask - 1]?.instruction || 'Loading task...'}
-          </h2>
-          {feedback && (
-            <p className={`text-xl font-bold ${feedback === 'Correct!' ? 'text-green-300' : 'text-red-400'}`}>
-              {feedback}
-            </p>
-          )}
+        {/* Task Instructions and Feedback Container with fixed height */}
+        <div className="h-19 mb-6"> {/* Fixed height container */}
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-gray-100 mb-2">
+              {tasks[currentTask - 1]?.instruction || 'Loading task...'}
+            </h2>
+            <div className="h-8"> {/* Fixed height for feedback */}
+              {feedback && (
+                <p className={`text-xl font-bold ${feedback === 'Correct!' ? 'text-green-300' : 'text-red-400'}`}>
+                  {feedback}
+                </p>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* Image Display */}
@@ -80,7 +108,7 @@ const TaskDisplay = ({ currentTask, onTaskComplete }) => {
         </div>
 
         {/* Answer Buttons */}
-        <div className="flex justify-center gap-20">
+        <div className="flex justify-center gap-20 mt-4">
           <button
             onClick={() => handleAnswer('left')}
             disabled={!!selectedAnswer}
