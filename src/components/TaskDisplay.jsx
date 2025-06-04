@@ -263,12 +263,12 @@ setQuestionVariant(nextVariant);
 
   return (
     <div className="flex flex-col items-center min-h-screen pt-0 pb-2 px-4 w-full">
-      <div className="bg-gray-800/20 rounded-xl shadow-2xl p-8 max-w-10xl w-21/12 backdrop-blur-sm mt-20">
+      <div className="bg-gray-800/20 rounded-xl shadow-2xl p-8 max-w-10xl w-[1000px] backdrop-blur-sm mt-14 h-[750px] flex flex-col">
         {/* Task Instructions and Feedback Container with fixed height */}
-        <div className="h-19 mb-6">
+        <div className="h-[60px] mb-6 flex-shrink-0">
           <div className="text-center">
             <h2 className="text-2xl font-bold text-gray-100 mb-2">
-              {currentQuestion?.instruction || 'Loading task...'}
+              {getCurrentQuestion().instruction || 'Loading task...'}
             </h2>
             <div className="h-8">
               {feedback && (
@@ -281,7 +281,7 @@ setQuestionVariant(nextVariant);
         </div>
 
         {/* Image Display */}
-        <div className="flex justify-center items-center mb-4">
+        <div className="flex justify-center items-center mb-4 flex-grow">
           <div className="w-[500px] h-[500px] relative overflow-hidden rounded-lg shadow-xl">
             <img
               src={currentTaskData?.image}
@@ -296,7 +296,7 @@ setQuestionVariant(nextVariant);
         </div>
 
         {/* Answer Buttons */}
-        <div className="flex justify-center gap-20 mt-4">
+        <div className="flex justify-center gap-20 mt-0 flex-shrink-0 h-[60px]">
           <button
             onClick={() => handleAnswer('left')}
             disabled={!!selectedAnswer}
