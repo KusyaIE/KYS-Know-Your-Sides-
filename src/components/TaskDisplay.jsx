@@ -4,44 +4,197 @@ const TaskDisplay = ({ currentTask, onTaskComplete }) => {
   const [feedback, setFeedback] = useState('');
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [taskSequence, setTaskSequence] = useState([]);
+  const [questionVariant, setQuestionVariant] = useState(0); // 0 or 1 for different questions
 
   // Example task structure - you can modify this based on your actual tasks
   const tasks = [
     {
       id: 1,
       image: '/media/Which ear did the dog tilt   left or right (left).png', // You'll need to add actual images to your assets
-      instruction: 'Which ear did the dog tilt - left or right?',
-      answer: "left"
+      questions: [
+        {
+          instruction: 'Which ear did the dog tilt - the left or the right one?',
+          answer: "left"
+        },
+        {
+          instruction: 'Which ear did the dog raise - the left or the right one?',
+          answer: "right"
+        }
+      ]
     },
     {
       id: 2,
       image: '/media/Is_the_light_switch_to_the_left_or_to_the_right_of_the_door_left.png',
-      instruction: 'Is the light switch to the left or to the right of the door?',
-      answer: "left"
+      questions: [
+        {
+          instruction: 'Is the light switch to the left or right of the door?',
+          answer: "left"
+        },
+        {
+          instruction: 'Is the door to the left or right of the light switch?',
+          answer: "right"
+        }
+      ]
     },
     {
       id: 3,
       image: '/media/Which shoe is untied   the left or the right (right).png',
-      instruction: 'Which shoe is untied - the left or the right?',
-      answer: "right"
+      questions: [
+        {
+          instruction: 'Which shoe is untied, the left or the right?',
+          answer: "right"
+        },
+      ]
     },
     {
       id: 4,
       image: '/media/Which side of the vase is the apple on (left).png',
-      instruction: 'Which side of the vase is the apple on?',
-      answer: "left"
+      questions: [
+        {
+          instruction: 'Which side of the vase is the apple on - left or right?',
+          answer: "left"
+        },
+        {
+          instruction: 'Is the vase on the left or right side of the apple?',
+          answer: "right"
+        }
+      ]
     },
     {
       id: 5,
       image: '/media/Which side of the plate is the spoon on (right).png',
-      instruction: 'Which side of the plate is the spoon on?',
-      answer: "right"
+      questions: [
+        {
+          instruction: 'Is the spoon on the left or right of the plate?',
+          answer: "right"
+        },
+        {
+          instruction: 'Is the plate to the left or right of the spoon?',
+          answer: "left"
+        }
+      ]
     },
     {
       id: 6,
-      image: '/media/Which side of the plate is the knife on (left).png',
-      instruction: 'Which side of the plate is the knife on?',
-      answer: "left"
+      image: '/media/Which side of the plate is the spoon on (left).png',
+      questions: [
+        {
+          instruction: 'Is the spoon on the left or right of the plate?',
+          answer: "left"
+        },
+        {
+          instruction: 'Is the plate to the left or right of the spoon?',
+          answer: "right"
+        }
+      ]
+    },
+    {
+      id: 7,
+      image: '/media/Is_the_light_switch_to_the_left_or_to_the_right_of_the_door_right.png',
+      questions: [
+        {
+          instruction: 'Is the light switch to the left or right of the door?',
+          answer: "right"
+        },
+        {
+          instruction: 'Is the door to the left or right of the light switch?',
+          answer: "left"
+        }
+      ]
+    },
+    {
+      id: 8,
+      image: '/media/Which side of the kitten is the yarn ball on (left).png',
+      questions: [
+        {
+          instruction: 'On which side of the kitten is the yarn ball - left or right?',
+          answer: "left"
+        },
+        {
+          instruction: 'On which side of the yarn ball is the kitten - left or right?',
+          answer: "right"
+        }
+      ]
+    },
+    {
+      id: 9,
+      image: '/media/Which shoe is untied   the left or the right (left).png',
+      questions: [
+        {
+          instruction: 'Which shoe is untied, the left or the right?',
+          answer: "left"
+        },
+      ]
+    },
+    {
+      id: 10,
+      image: '/media/Which side of the alarm clock is the phone on (right).png',
+      questions: [
+        {
+          instruction: 'On which side of the alarm clock is the phone - left or right??',
+          answer: "right"
+        },
+        {
+          instruction: 'On which side of the phone is the alarm clock - left or right?',
+          answer: "left"
+        }
+      ]
+    },
+    {
+      id: 11,
+      image: '/media/Which side of the chair is the backpack on (left).png',
+      questions: [
+        {
+          instruction: 'On which side of the chair is the backpack - left or right?',
+          answer: "left"
+        },
+        {
+          instruction: 'On which side of the backpack is the chair - left or right?',
+          answer: "right"
+        }
+      ]
+    },
+    {
+      id: 12,
+      image: '/media/Which side of the chair is the backpack on (right).png',
+      questions: [
+        {
+          instruction: 'On which side of the chair is the backpack - left or right?',
+          answer: "right"
+        },
+        {
+          instruction: 'On which side of the backpack is the chair - left or right?',
+          answer: "left"
+        }
+      ]
+    },
+    {
+      id: 13,
+      image: '/media/Which side of the kitten is the yarn ball on (right).png',
+      questions: [
+        {
+          instruction: 'On which side of the kitten is the yarn ball - left or right?',
+          answer: "right"
+        },
+        {
+          instruction: 'On which side of the yarn ball is the kitten - left or right?',
+          answer: "left"
+        }
+      ]
+    },
+    {
+      id: 14,
+      image: '/media/Which side of the chair is the backpack on (left).png',
+      questions: [
+        {
+          instruction: 'On which side of the chair is the backpack - left or right?',
+          answer: "left"
+        },
+        {
+          instruction: 'On which side of the backpack is the chair - left or right?',
+          answer: "right"
+        }
+      ]
     },
     // Add more tasks as needed
   ];
@@ -68,7 +221,7 @@ const TaskDisplay = ({ currentTask, onTaskComplete }) => {
   const handleAnswer = (answer) => {
     setSelectedAnswer(answer);
     const currentTaskData = tasks[taskSequence[currentTask - 1]];
-    const isCorrect = answer === currentTaskData.answer;
+    const isCorrect = answer === currentTaskData.questions[questionVariant].answer;
     setFeedback(isCorrect ? 'Correct!' : 'Wrong!');
     
     setTimeout(() => {
@@ -76,6 +229,8 @@ const TaskDisplay = ({ currentTask, onTaskComplete }) => {
         // If we're at the last task, generate new random sequence
         setTaskSequence(shuffleArray([...Array(tasks.length)].map((_, i) => i)));
       }
+      // Randomly select which question variant to show for the next task
+      setQuestionVariant(Math.floor(Math.random() * 2));
       onTaskComplete();
       setFeedback('');
       setSelectedAnswer(null);
@@ -89,7 +244,7 @@ const TaskDisplay = ({ currentTask, onTaskComplete }) => {
 
     if (selectedAnswer === buttonType) {
       const currentTaskData = tasks[taskSequence[currentTask - 1]];
-      const isCorrect = buttonType === currentTaskData.answer;
+      const isCorrect = buttonType === currentTaskData.questions[questionVariant].answer;
       return isCorrect 
         ? 'bg-green-500 text-white' 
         : 'bg-red-500 text-white';
@@ -108,7 +263,7 @@ const TaskDisplay = ({ currentTask, onTaskComplete }) => {
         <div className="h-19 mb-6"> {/* Fixed height container */}
           <div className="text-center">
             <h2 className="text-2xl font-bold text-gray-100 mb-2">
-              {currentTaskData?.instruction || 'Loading task...'}
+              {currentTaskData?.questions[questionVariant].instruction || 'Loading task...'}
             </h2>
             <div className="h-8"> {/* Fixed height for feedback */}
               {feedback && (
