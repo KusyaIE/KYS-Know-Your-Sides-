@@ -1,10 +1,10 @@
-import { useState, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect, useEffect } from 'react';
 
 const TaskDisplay = ({ currentTask, onTaskComplete }) => {
   const [feedback, setFeedback] = useState('');
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [taskSequence, setTaskSequence] = useState([]);
-  const [questionVariant, setQuestionVariant] = useState(0); // 0 or 1 for different questions
+  const [questionVariant, setQuestionVariant] = useState(Math.floor(Math.random() * 2)); // Initialize with random variant
 
   // Example task structure - you can modify this based on your actual tasks
   const tasks = [
@@ -44,6 +44,10 @@ const TaskDisplay = ({ currentTask, onTaskComplete }) => {
           instruction: 'Which shoe is untied, the left or the right?',
           answer: "right"
         },
+        {
+          instruction: 'Which shoe is tied - the left or the right?',
+          answer: "left"
+        }
       ]
     },
     {
@@ -124,6 +128,10 @@ const TaskDisplay = ({ currentTask, onTaskComplete }) => {
           instruction: 'Which shoe is untied, the left or the right?',
           answer: "left"
         },
+        {
+          instruction: 'Which shoe is tied - the left or the right?',
+          answer: "right"
+        }
       ]
     },
     {
@@ -182,20 +190,6 @@ const TaskDisplay = ({ currentTask, onTaskComplete }) => {
         }
       ]
     },
-    {
-      id: 14,
-      image: '/media/Which side of the chair is the backpack on (left).png',
-      questions: [
-        {
-          instruction: 'On which side of the chair is the backpack - left or right?',
-          answer: "left"
-        },
-        {
-          instruction: 'On which side of the backpack is the chair - left or right?',
-          answer: "right"
-        }
-      ]
-    },
     // Add more tasks as needed
   ];
 
@@ -209,28 +203,31 @@ const TaskDisplay = ({ currentTask, onTaskComplete }) => {
     return shuffled;
   };
 
-  // Initialize random task sequence
+  // Initialize random task sequence and first question variant
   useLayoutEffect(() => {
     setTaskSequence(
       shuffleArray(
         [...Array(tasks.length)].map((_, i) => i)
       )
     );
-  }, [tasks.length]); 
+    setQuestionVariant(Math.floor(Math.random() * 2));
+  }, [tasks.length]);
+  
 
   const handleAnswer = (answer) => {
     setSelectedAnswer(answer);
-    const currentTaskData = tasks[taskSequence[currentTask - 1]];
-    const isCorrect = answer === currentTaskData.questions[questionVariant].answer;
+    const currentQuestion = currentTaskData.questions[questionVariant];
+    const isCorrect = answer === getCurrentQuestion().answer;
     setFeedback(isCorrect ? 'Correct!' : 'Wrong!');
     
     setTimeout(() => {
+      // Generate new random sequence if we're at the last task
       if (currentTask === tasks.length) {
-        // If we're at the last task, generate new random sequence
         setTaskSequence(shuffleArray([...Array(tasks.length)].map((_, i) => i)));
       }
-      // Randomly select which question variant to show for the next task
-      setQuestionVariant(Math.floor(Math.random() * 2));
+      // Always set a new random question variant (0 or 1) for the next task
+      const nextVariant = Math.floor(Math.random() * 2);
+setQuestionVariant(nextVariant);
       onTaskComplete();
       setFeedback('');
       setSelectedAnswer(null);
@@ -244,7 +241,8 @@ const TaskDisplay = ({ currentTask, onTaskComplete }) => {
 
     if (selectedAnswer === buttonType) {
       const currentTaskData = tasks[taskSequence[currentTask - 1]];
-      const isCorrect = buttonType === currentTaskData.questions[questionVariant].answer;
+      const currentQuestion = currentTaskData.questions[questionVariant];
+      const isCorrect = buttonType === currentQuestion.answer;
       return isCorrect 
         ? 'bg-green-500 text-white' 
         : 'bg-red-500 text-white';
@@ -253,19 +251,26 @@ const TaskDisplay = ({ currentTask, onTaskComplete }) => {
     return baseStyles;
   };
 
-  // Get current task data based on shuffled sequence
+  const getCurrentQuestion = () => {
+    const qArr = currentTaskData.questions;
+    // если index выходит за пределы — берём первый вопрос
+    return qArr[questionVariant] ?? qArr[0];
+  };
+
+  // Get current task data and ensure we have a valid question variant
   const currentTaskData = taskSequence.length > 0 ? tasks[taskSequence[currentTask - 1]] : tasks[0];
+  const currentQuestion = currentTaskData?.questions[questionVariant] || currentTaskData?.questions[0];
 
   return (
     <div className="flex flex-col items-center min-h-screen pt-0 pb-2 px-4 w-full">
       <div className="bg-gray-800/20 rounded-xl shadow-2xl p-8 max-w-10xl w-21/12 backdrop-blur-sm mt-20">
         {/* Task Instructions and Feedback Container with fixed height */}
-        <div className="h-19 mb-6"> {/* Fixed height container */}
+        <div className="h-19 mb-6">
           <div className="text-center">
             <h2 className="text-2xl font-bold text-gray-100 mb-2">
-              {currentTaskData?.questions[questionVariant].instruction || 'Loading task...'}
+              {currentQuestion?.instruction || 'Loading task...'}
             </h2>
-            <div className="h-8"> {/* Fixed height for feedback */}
+            <div className="h-8">
               {feedback && (
                 <p className={`text-xl font-bold ${feedback === 'Correct!' ? 'text-green-300' : 'text-red-400'}`}>
                   {feedback}
