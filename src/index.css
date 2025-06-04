@@ -47,10 +47,11 @@ button {
 }
 
 button:hover {
-  border-color: #fff2b7;
+  border-color: #22221e;
 }
 
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: none;
+     box-shadow: 0 0 0 4px #dfac03;
 }
